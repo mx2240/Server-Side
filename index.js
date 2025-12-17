@@ -4,6 +4,37 @@ const mongoose = require('mongoose');
 const routes = require('./routes/routes');
 
 const app = express();
+
+const allowedOrigins = [
+    "http://localhost:5173",
+    // local Vite dev
+    "https://clientside-mu.vercel.app/"
+
+
+
+    // production frontend
+];
+
+// CORS middleware
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin) return callback(null, true); // allow non-browser requests (Postman, server-side)
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = "The CORS policy for this site does not allow access from the specified Origin.";
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
+// Handle preflight OPTIONS requests
+app.options("*", cors());
+
+
+
 app.use(express.json());
 
 
