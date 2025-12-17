@@ -6,11 +6,8 @@ const routes = require('./routes/routes');
 const app = express();
 
 const allowedOrigins = [
-    "http://localhost:5173",
-    // local Vite dev
+    "http://localhost:5173", // local Vite dev
     "https://clientside-mu.vercel.app/"
-
-
 
     // production frontend
 ];
